@@ -1,5 +1,6 @@
 
 <?php
+
 namespace Blog\Core;
 
 use \PDO;
@@ -24,4 +25,6 @@ class Connection extends Singleton
         }
     }
 }
-/* Clearly I have borrowed Axels Connection class. */
+
+/* 	Clearly I have borrowed Axels Connection class. 
+		class Connection creates a new PHP Data Object using the values in app.json. */
