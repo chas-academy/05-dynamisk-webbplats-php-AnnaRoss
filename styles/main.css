@@ -1,0 +1,55 @@
+@import url(https://meyerweb.com/eric/tools/css/reset/reset.css);
+/** Borrowing Eric Meyer's reset-stylesheet. Thank you, Meyer! **/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+header {
+    grid-area: header;
+}
+
+nav {
+    grid-area: nav;
+}
+
+main {
+   grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+}
+
+.grid {
+    display: grid;
+    align-items: center;
+}
+
+.grid-container {
+    grid-template-columns: 2fr 15% 10% 30% 1fr;
+    grid-template-rows: 200px 200px 200px 200px; 
+    grid-template-areas: 
+        ". header header header ."
+        ". nav . main ."
+        ". nav . main ."
+        ". footer footer footer ."
+}
+
+/*** Typography ***/
+body {
+    font-family: Courier New, Courier, monospace;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 20px;
+}
+.masthead > a {
+    font-size: 30px;
+}
