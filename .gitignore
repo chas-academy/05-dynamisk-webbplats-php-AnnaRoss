@@ -1,10 +1,11 @@
 
-
+Vagrantfile
 provisioner.sh
 .htacess
 .vagrant/
 *.box
-
+TODO.md
+deploy.php
 
 
 
