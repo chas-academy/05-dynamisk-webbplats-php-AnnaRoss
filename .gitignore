@@ -1,12 +1,14 @@
 
-Vagrantfile
+.vscode/
 provisioner.sh
-.htacess
+deploy.php
 .vagrant/
 *.box
-TODO.md
-deploy.php
+Vagrantfile
 
+TODO.md
+APPENDIX_NAMING.md
+README.md
 
 
 
