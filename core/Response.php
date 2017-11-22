@@ -37,8 +37,25 @@
         
         public function render_template(string $template_path = null, array $params = [], int $statusCode = null)
         {
+            $header = Preferences::$templateDirectory . 'header.html';
             $template_path = Preferences::$templateDirectory . $template_path;
-            return $this->render_file($template_path, $params, $statusCode);
+            $footer = Preferences::$templateDirectory . 'footer.html';
+            if (isset($statusCode))
+            {
+                http_response_code($statusCode);
+            }
+
+            extract($params);
+
+            ob_start();
+            if (file_exists($template_path)) 
+            {   include($header);
+                include($template_path);
+                include($footer);
+            }
+            $renderedView = ob_get_clean();
+            return exit(print($renderedView));
+
         }
 
         public function json($data, int $statusCode = null)
