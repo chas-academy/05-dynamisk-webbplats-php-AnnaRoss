@@ -8,21 +8,30 @@
     /* Include Fleshpress */
     require_once('./core/Fleshpress.php');
 
+    /* Include custom models */
+    require_once('./models/ArticleModel.php');
+
     /* Instantiate Fleshpress */
     $app = new Fleshpress();
 
     /* Register Routes and Controllers */
-    $app->get('/', function($req, $res) {
-
+    $app->get('/', function($req, $res)
+    {
         $properties = [
-            'title' => 'Hello World!',
+            'title' => 'Hey',
             'content' => 'This is the start page'
         ];
 
         $res->render_template('start.html', $properties);
     });
 
+
+    $app->get('/articles', function($req, $res)
+    {
+        $articles = ArticleModel::findAll();
+        
+        $res->render_template('articles.html', ['articles' => $articles]);
+    });
+
     /* Start the App */
     $app->start();
-
-?>
