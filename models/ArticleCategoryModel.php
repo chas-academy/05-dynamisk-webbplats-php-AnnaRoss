@@ -2,7 +2,7 @@
 
 require_once('./core/Model.php');
 
-class ArticleCategory extends Model 
+class ArticleCategoryModel extends Model 
 {
     protected static $tableName;
     protected $schema;
