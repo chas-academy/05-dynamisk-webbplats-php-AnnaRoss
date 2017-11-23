@@ -10,13 +10,12 @@ class ArticleModel extends Model
     public function __construct(
         string $headline, 
         string $runningtext
-        // tbd way to attach category
-        // tbd way to attach tag/tags 
     )
     {
         $this->schema = [
             'headline' => $headline,
             'runningtext' => $runningtext,
+            'publishing_date' => date("Y-m-d H:i:s")
         ];
     }
 

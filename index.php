@@ -13,8 +13,7 @@
     require_once('./models/CategoryModel.php');
     require_once('./models/TagModel.php');
     require_once('./models/UserModel.php');
-
-    // require_once('./models/ArticleCategoryModel.php');
+    require_once('./models/ArticleCategoryModel.php');
     // require_once('./models/ArticleTagModel.php');
     // require_once('./models/ArticleUserModel.php');
     
@@ -48,8 +47,12 @@
     $app->get('/articles', function($req, $res)
     {
         $articles = ArticleModel::findAll();
+        $categories = CategoryModel::findAll();
 
-        $res->render_template('articles.html', ['articles' => $articles]);
+        $res->render_template('articles.html', [
+            'articles' => $articles,
+            'categories' => $categories
+        ]);
     });
 
     $app->post('/articles', function($req, $res)
@@ -60,8 +63,13 @@
         );
 
         $returnedArticle = $newArticle->save();
-        // 2. Save category
 
+        $newArticleCategory = new ArticleCategoryModel(
+            $returnedArticle['id'], 
+            $req->body['category']
+        ); 
+
+        $newArticleCategory->save(); 
         // assigna choosen category to $articleReturn. plocka ut returned article id med nyckel-brackets.
         // plocka ut nyckel id för categorin
         //nya upp en instans av Article_Category, mata in id-värdena (vilket ska definieras i Article_CategoryModels consturcotr. och spara den.
