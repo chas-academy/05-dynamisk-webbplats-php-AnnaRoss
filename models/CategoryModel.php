@@ -2,26 +2,25 @@
 
     require_once('./core/Model.php');
 
-    class Example extends Model
+    class CategoryModel extends Model
     {
 
         protected static $tableName;
         protected $schema;
 
-        public function __construct(string $name)
+        public function __construct(string $title, string $description)
         {
             $this->schema = [
-                'name' => $name
+                'title' => $title,
+                'description' => $description
             ];
         }
 
         public static function register()
         {
-            static::$tableName = 'example_table';
+            static::$tableName = 'categories';
         }
 
     }
 
-    Example::register();
-
-?>
+    CategoryModel::register();
