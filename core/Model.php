@@ -20,14 +20,10 @@
         public static function findAll()
         {
             try {
-                $statement = self::getDB()->query('SELECT * from ' . static::$tableName);
+                $statement = self::getDB()->query('SELECT * FROM ' . static::$tableName);
                 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     
-                if (! empty($results)) {
-                    return $results;
-                } else {
-                    throw new Exception("Could not fetch results.");
-                }
+                return $results;
 
             } catch (PDOException $err) {
                 return $err->getMessage();
