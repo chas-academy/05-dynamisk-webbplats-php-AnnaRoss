@@ -1,0 +1,25 @@
+<fieldset>
+
+        <form method="POST"> 
+
+            <legend>Create new category: </legend> 
+    
+            <label for="title">Name of category: </label>
+            <input name="title" type="text" id="title" required="true"/>
+    
+            <label for="description">Short description of category content: </label>
+            <textarea name="description" type="text" id="description" required="true"></textarea>
+    
+            <button type="submit">Create new category!</button>
+    
+        </form>
+    </fieldset>
+    
+    <ul>
+        <?php foreach ($categories as $category): ?>
+        <li>
+            <?php echo $category['title'] ?>
+            <?php echo $category['description'] ?>
+        </li>
+        <?php endforeach; ?>
+    </ul>
