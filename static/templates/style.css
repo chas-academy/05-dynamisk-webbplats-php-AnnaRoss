@@ -1,6 +1,63 @@
-@import url(https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css);
-
 * {
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: Courier New, Courier, monospace, serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+}
+
+header {
+    display: flex;
+}
+
+header fieldset {
+    flex: 2;
+}
+
+header h1 {
+    flex: 1;
+}
+
+header nav {
+    flex: 2;
+}
+
+footer {
+    display: flex;
+    position: relative;
+    top: 4em;
+    justify-content: flex-end;
+}
+
+fieldset {
+    display: flex;
+    margin-bottom: 2em;
+}
+
+header nav ul {
+    justify-content: space-around;
     list-style: none;
-    text-decoration: none;
+}
+
+
+fieldset textarea {
+    min-width: 400px;
+    height: 200px;
+}
+
+h1, p {
+    margin: 0 0 1em 0,
 }
