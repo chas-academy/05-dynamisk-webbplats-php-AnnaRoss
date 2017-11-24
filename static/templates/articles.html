@@ -1,5 +1,93 @@
-<ul>
-<?php foreach ($articles as $article): ?>
-    <li><?php echo $article['headline'] ?></li>
-<?php endforeach; ?>
-</ul>
+<fieldset>
+
+    <legend>Create a new blog post!</legend>
+
+    <form method="POST">
+
+        <label for="category">Categorize your new blog post: </label>
+        <select name="category" id="category" required="true">
+            <?php foreach ($categories as $category): ?>
+            <option value="<?php echo $category['id']; ?>">
+                <?php echo $category[ 'title'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+        <br>
+
+        <label for="tag">Tag my new post with: </label>
+        <select name="tag" id="tag">
+            <?php foreach ($tags as $tag): ?>
+            <option value="<?php echo $tag['id']; ?>">
+                <?php echo $tag['title'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+        <br>
+
+        <label for="headline">The headline of my blog post: </label>
+        <br>
+
+
+        <input name="headline" type="text" id="headline" required="true" />
+        <br>
+
+        <label for="runningtext">The main text content of my blog post: </label>
+        <textarea name="runningtext" type="text" id="runningtext" required="true"></textarea>
+        <br>
+
+        <button type="submit">Please, save my new blog post!</button>
+
+    </form>
+
+</fieldset>
+
+
+<fieldset>
+
+    <legend>I need some new tags!</legend>
+
+    <form method="POST" action="/tags">
+
+        <label for="title">Create new a tag!</label>
+        <input name="title" type="text" id="title" required="true" />
+        <br>
+
+        <button type="submit">Save my new tag, thnx!</button>
+
+    </form>
+
+</fieldset>
+
+<fieldset>
+    <form method="POST" action="/categories">
+
+        <legend>Create new category: </legend>
+
+        <label for="title">Name of category: </label>
+        <input name="title" type="text" id="title" required="true" />
+
+        <label for="description">Short description of category content: </label>
+        <textarea name="description" type="text" id="description" required="true"></textarea>
+
+        <button type="submit">Create new category!</button>
+    </form>
+</fieldset>
+
+
+<section>
+    <ul>
+        <?php foreach ($articles as $article): ?>
+        <li>
+            <h3>
+                <?php echo $article['headline'] ?>
+            </h3>
+            <p>
+                <?php echo $article['runningtext'] ?>
+            </p>
+            <p>
+                <?php echo $article['publishing_date'] ?>
+            </p>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
