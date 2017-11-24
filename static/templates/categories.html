@@ -1,6 +1,5 @@
-<fieldset>
-
-        <form method="POST"> 
+    <fieldset>
+        <form method="POST" action="/categories"> 
 
             <legend>Create new category: </legend> 
     
@@ -11,15 +10,16 @@
             <textarea name="description" type="text" id="description" required="true"></textarea>
     
             <button type="submit">Create new category!</button>
-    
         </form>
     </fieldset>
-    
-    <ul>
-        <?php foreach ($categories as $category): ?>
-        <li>
-            <?php echo $category['title'] ?>
-            <?php echo $category['description'] ?>
-        </li>
-        <?php endforeach; ?>
-    </ul>
+
+    <section>
+        <ul>
+            <?php foreach ($categories as $category): ?>
+            <li>
+                <p><?php echo $category['title'] ?></p>
+                <p><?php echo $category['description'] ?></p>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </section>
