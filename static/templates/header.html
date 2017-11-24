@@ -11,17 +11,26 @@
 
 <body>
     <header role="banner">
-        <h1>Hey</h1>
+        <h1>Bloguru <3</h1>
         
         <nav role="navigation">
             <ul>
-                <li>nav#1</li>
-                <li>nav#2</li>
-                <li>nav#3</li>
+                <li><a href="/articles">articles</a></li>
+                <li><a href="/categories">categories</a></li>
+                <li><a href="/tags">tags</a></li>
             </ul>
         </nav>
-        <form>
-            <input type="tbd"> <!-- to be defined -->
-            <input type="submit">
-        </form>
+
+        <fieldset>
+            <legend>Yey, lets log in!</legend> 
+            <form method="POST" action="/login">
+                <label for="username">Username: </label>
+                <input type="text" name="username" id="username" /><br>
+                <label for="password">Password: </label>
+                <input name="password" type="password" id="password" /><br>
+                <button type="submit">log in...</button>
+            </form>
+        </fieldset>
     </header>
+
+    <main>
