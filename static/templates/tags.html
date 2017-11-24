@@ -1,0 +1,24 @@
+<fieldset>
+
+    <form method="POST" action="/tags">
+
+        <label for="title">Create new a tag!</label>
+        <input name="title" type="text" id="title" required="true"/>
+
+        <button type="submit">Create new tag!</button>
+
+    </form>
+
+</fieldset>
+
+<section>
+    <ul>
+        <?php foreach ($tags as $tag): ?>
+        <li>
+            <p>
+                <?php echo $tag['title'] ?>
+            </p>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
