@@ -9,15 +9,14 @@ class UserModel extends Model
 
     public function __construct(
         string $username,
-        string $email,
-        string $type
+        string $password,
+        string $email
     )
-
     {
         $this->schema = [
             'username' => $username,
-            'email' => $email,
-            'type' => $type
+            'password' => password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]),
+            'email' => $email
         ];
     }
 
@@ -25,7 +24,6 @@ class UserModel extends Model
     {
         static::$tableName = 'users';
     }
-
 }
 
 UserModel::register();
