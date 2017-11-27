@@ -1,1 +1,19 @@
-<?php echo $title ?>
+<fieldset>
+        
+            <legend>Sign up</legend>
+        
+            <form method="POST" action="/signup">
+        
+                <label for="username">username: </label>
+                <input name="username" type="text" id="username" required pattern="^[A-Za-z0-9_]{1,32}$" /> </br>
+        
+                <label for="password">password: </label>
+                <input name="password" type="password" id="password" required pattern="^[A-Za-z0-9_]{1,32}$"/> </br>
+        
+                <label for="email">email: </label>
+                <input name="email" type="email" id="email" required /> </br>
+        
+                <button type="submit">Register me!</button>
+        
+            </form>
+</fieldset>
