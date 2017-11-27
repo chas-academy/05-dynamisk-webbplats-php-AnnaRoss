@@ -2,10 +2,10 @@
 
     <legend>Create a new blog post!</legend>
 
-    <form method="POST">
+    <form method="POST" action="/articles">
 
         <label for="category">Categorize your new blog post: </label>
-        <select name="category" id="category" required="true">
+        <select name="category" id="category" required>
             <?php foreach ($categories as $category): ?>
             <option value="<?php echo $category['id']; ?>">
                 <?php echo $category[ 'title'] ?>
@@ -14,27 +14,28 @@
         </select>
         <br>
 
-        <label for="tag">Tag my new post with: </label>
-        <select name="tag" id="tag">
+        <fieldset name="select-tags">
+
             <?php foreach ($tags as $tag): ?>
-            <option value="<?php echo $tag['id']; ?>">
+
+            <input type="checkbox" name="tags[]" id="<?php echo $tag['title']; ?>" value="<?php echo $tag['id']; ?>">
+            <label for="<?php echo $tag['title']; ?>">
                 <?php echo $tag['title'] ?>
-            </option>
+            </label>
+
             <?php endforeach; ?>
-        </select>
+        </fieldset>
         <br>
 
-        <label for="headline">The headline of my blog post: </label>
+        <label for="headline">Headline: </label>
+        <textarea type="text" name="headline" id="headline" required maxlength="40" placeholder="A very cool and intruiging headline"
+            cols="70" rows="2" /></textarea>
         <br>
 
-
-        <input name="headline" type="text" id="headline" required="true" />
+        <label for="runningtext"> and here's the main content: </label>
+        <textarea name="runningtext" type="text" id="runningtext" required="true" minlength="10" maxlength="2000" wrap="hard" cols="70"
+            rows="30"></textarea>
         <br>
-
-        <label for="runningtext">The main text content of my blog post: </label>
-        <textarea name="runningtext" type="text" id="runningtext" required="true"></textarea>
-        <br>
-
         <button type="submit">Please, save my new blog post!</button>
 
     </form>
@@ -44,12 +45,12 @@
 
 <fieldset>
 
-    <legend>I need some new tags!</legend>
+    <legend>I need a new tag!</legend>
 
     <form method="POST" action="/tags">
 
-        <label for="title">Create new a tag!</label>
-        <input name="title" type="text" id="title" required="true" />
+        <label for="title">Name of my new tag: </label>
+        <input type="text" name="title" id="title" required />
         <br>
 
         <button type="submit">Save my new tag, thnx!</button>
@@ -59,35 +60,35 @@
 </fieldset>
 
 <fieldset>
+
     <form method="POST" action="/categories">
 
         <legend>Create new category: </legend>
 
-        <label for="title">Name of category: </label>
-        <input name="title" type="text" id="title" required="true" />
+        <label for="title">Name of my new category: </label>
+        <input type="text" name="title"  id="title" required minlength="10" maxlength="20" />
 
         <label for="description">Short description of category content: </label>
-        <textarea name="description" type="text" id="description" required="true"></textarea>
+        <textarea type="text" name="description" id="description" required cols="30" rows="2" minlength="10" maxlength="100"></textarea>
 
-        <button type="submit">Create new category!</button>
+        <button type="submit">Save my new category!</button>
     </form>
-</fieldset>
 
-
-<section>
-    <ul>
-        <?php foreach ($articles as $article): ?>
-        <li>
-            <h3>
+    <?php foreach ($articles as $article): ?>
+    <section>
+        <article>
+            <h2>
                 <?php echo $article['headline'] ?>
-            </h3>
+            </h2>
             <p>
                 <?php echo $article['runningtext'] ?>
             </p>
             <p>
                 <?php echo $article['publishing_date'] ?>
             </p>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-</section>
+        </article>
+        <ul>
+            <li></li>
+        </ul>
+    </section>
+    <?php endforeach; ?>
