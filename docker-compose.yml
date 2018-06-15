@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:     
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_DATABASE: blog_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: supersecret
+    ports:
+      - "9906:3306"
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: php:7.2.2-apache
+    container_name: php_web
+    depends_on:
+      - db
+    volumes:
+      - ./php/:/var/www/html/
+    ports:
+      - "8100:80"
+
+  
