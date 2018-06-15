@@ -1,10 +1,13 @@
 <?php 
 
-require_once('./src/utils/Singleton.php');
+namespace App\Core;
+
+use App\Utils\Singleton;
+use \PDO;
 
     class Connection extends Singleton
     {
-        public $db_handler;
+        public $dbHandler;
         private $data;
 
         public function __construct()
@@ -14,13 +17,13 @@ require_once('./src/utils/Singleton.php');
     
                 /* An instance of the PHP Data Object class */
                 /* enables us to access the specified database */
-                $this->db_handler = new PDO(
+                $this->dbHandler = new PDO(
                     $config['db']['dsn'],
                     $config['db']['user'],
                     $config['db']['password']
                 ); 
     
-                $this->db_handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $this->dbHandler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             } catch (PDOException $error) {
                 echo $error->getMessage();

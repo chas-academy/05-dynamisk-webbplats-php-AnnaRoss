@@ -1,5 +1,7 @@
 <?php 
 
+namespace App\Utils;
+
     abstract class Singleton 
     {
         private static $instances = array();
@@ -22,4 +24,3 @@
         }
     }
 
-?>

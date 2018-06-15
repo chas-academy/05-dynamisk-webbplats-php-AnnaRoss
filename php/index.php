@@ -1,8 +1,19 @@
 <?php
 
-require_once('./src/core/Connection.php');
+use App\Core\Connection;
 
-$db = Connection::getInstance()->db_handler;
+function autoloader($classname)
+{
+    $lastSlash = strpos($classname, '\\') + 1;
+    $classname = substr($classname, $lastSlash);
+    $filePathWithoutExtension = str_replace('\\', '/', $classname);
+    $filename = __DIR__ . '/src/' . $filePathWithoutExtension . '.php';
+    require_once($filename);
+}
+
+spl_autoload_register('autoloader');
+
+$db = Connection::getInstance()->dbHandler;
 
 $query = <<<SQL
     INSERT INTO articles (headline, content)
@@ -23,6 +34,7 @@ $results = $getArticles->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
+
 <html>
     <head>
         <title>Hello World</title>
@@ -30,7 +42,7 @@ $results = $getArticles->fetchAll(PDO::FETCH_ASSOC);
 
     <body>
         <?php
-            echo "Hello, World!!!!";
+            echo "Hello, World!";
         ?>
     
     <pre>
