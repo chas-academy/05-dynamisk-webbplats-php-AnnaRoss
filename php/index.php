@@ -17,5 +17,4 @@ spl_autoload_register('autoloader');
 
 $router = new Router();
 $response = $router->getRoute(new Request());
-
-var_dump($response);
+echo $response;

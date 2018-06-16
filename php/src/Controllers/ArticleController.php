@@ -12,6 +12,6 @@ class ArticleController extends AbstractController
         $articleModel = new ArticleModel();
         $articles = $articleModel->getAll();
         
-        return var_dump($articles);
+       return $this->render('views/articles.html', $articles);
     }
 }
