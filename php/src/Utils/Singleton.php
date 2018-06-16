@@ -4,7 +4,7 @@ namespace App\Utils;
 
     abstract class Singleton 
     {
-        private static $instances = array();
+        private static $instances = [];
 
         protected function __construct() 
         {}
