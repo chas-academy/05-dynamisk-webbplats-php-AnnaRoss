@@ -1,5 +1,35 @@
 <?php include('views/header.html')?>
-<pre>
-    <?php print_r($params) ?>
-</pre>
+
+<form method="POST" action="/articles">
+    <fieldset>
+        <legend>Write a new blog post!</legend>
+        <label for="headline">Headline: </label>
+        <textarea type="text" name="headline" id="headline" maxlength="40" placeholder="A very cool headline" cols="70" rows="2"
+            required /></textarea>
+        <br>
+
+        <label for="content"> and here's the main content: </label>
+        <textarea name="content" type="text" id="content" minlength="10" maxlength="2000" wrap="hard" cols="70" rows="30" required></textarea>
+        <br>
+        <button>save</button>
+    </fieldset>
+</form>
+
+
+<?php foreach ($params['articles'] as $article): ?>
+<article>
+    <h2>
+        <?php echo $article->getHeadline(); ?>
+    </h2>
+    <p>
+        <?php echo $article->getContent(); ?>
+    </p>
+    <footer>
+        <time>
+
+        </time>
+    </footer>
+</article>
+<?php endforeach; ?>
+
 <?php include('views/footer.html') ?>

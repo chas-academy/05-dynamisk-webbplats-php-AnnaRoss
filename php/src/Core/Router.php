@@ -19,8 +19,9 @@ class Router {
     public function getRoute(Request $request): string
     {
         $path = $request->getPath();
+        $method = $request->getMethod();
 
-        foreach ($this->routeMap as $route => $routeDetails) {
+        foreach ($this->routeMap[$method] as $route => $routeDetails) {
             $regexRoute = $this->getRegexRoute($route, $routeDetails);
 
             if (preg_match("@^/$regexRoute$@", $path)) {
@@ -29,7 +30,8 @@ class Router {
         }
     }
 
-    private function getRegexRoute(string $route, array $routeDetails): string {
+    private function getRegexRoute(string $route, array $routeDetails): string
+    {
         if (isset($routeDetails['params'])) {
             foreach ($routeDetails['params'] as $name => $type) {
                 $route = str_replace(':' . $name, self::$regexPatterns[$type], $route);

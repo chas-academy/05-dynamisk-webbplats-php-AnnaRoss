@@ -1,0 +1,14 @@
+{
+  "GET": {
+    "articles": {
+      "controller": "Article",
+      "methodToCall": "getAll"
+    }
+  },
+  "POST": {
+    "articles": {
+      "controller": "Article",
+      "methodToCall": "create"
+    }
+  }
+}
