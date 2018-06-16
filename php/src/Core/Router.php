@@ -10,23 +10,23 @@ class Router {
         'string' => '\w'
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $json = file_get_contents(__DIR__ . '/../../config/routes.json');
         $this->routeMap = json_decode($json, true);
     }
 
-    public function getRoute(Request $request): string {
+    public function getRoute(Request $request): string
+    {
         $path = $request->getPath();
-        var_dump($path);
+
         foreach ($this->routeMap as $route => $routeDetails) {
             $regexRoute = $this->getRegexRoute($route, $routeDetails);
+
             if (preg_match("@^/$regexRoute$@", $path)) {
                 return $this->executeController($route, $path, $routeDetails, $request);
             }
         }
-
-        /* $errorController = new ErrorController($request);
-        return $errorController->notFound(); */
     }
 
     private function getRegexRoute(string $route, array $routeDetails): string {
@@ -44,7 +44,8 @@ class Router {
         string $path,
         array $routeDetails,
         Request $request
-    ): string {
+    ): string
+    {
         $controllerName = '\App\Controllers\\' . $routeDetails['controller'] . 'Controller';
         $controller = new $controllerName($request);
 
@@ -54,15 +55,18 @@ class Router {
                 $controller->setUserId($userId);
             } else {
                 $errorController = new UserController($request);
+
                 return $errorController->login();
             }
         }
 
         $params = $this->extractParams($route, $path);
+
         return call_user_func_array([$controller, $routeDetails['methodToCall']], $params);
     }
 
-    private function extractParams(string $route, string $path): array {
+    private function extractParams(string $route, string $path): array
+    {
         $params = [];
 
         $pathParts = explode('/', $path);
