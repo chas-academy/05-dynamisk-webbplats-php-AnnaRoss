@@ -3,12 +3,39 @@
     "articles": {
       "controller": "Article",
       "methodToCall": "getAll"
+    },
+    "articles/:id": {
+      "controller": "Article",
+      "methodToCall": "get",
+      "params": {
+        "id": "number"
+      }
     }
   },
   "POST": {
     "articles": {
       "controller": "Article",
       "methodToCall": "create"
+    }
+  },
+  "PUT": {
+    "articles/:id": {
+      "controller": "Article",
+      "methodToCall": "update",
+      "params": {
+        "id": "number",
+        "method": "string"
+      }
+    }
+  },
+  "DELETE": {
+    "articles/:id": {
+      "controller": "Article",
+      "methodToCall": "delete",
+      "params": {
+        "id": "number",
+        "method": "string"
+      }
     }
   }
 }

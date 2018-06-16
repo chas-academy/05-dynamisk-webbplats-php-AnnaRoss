@@ -4,25 +4,35 @@ use App\Core\FilteredMap;
 
 class Request
 {
-    const GET = 'GET';
-    const POST = 'POST';
     private $domain;
     private $path;
     private $method;
+    private $putOrDeleteData = [];
     private $params;
     private $cookies;
 
-    public function __construct()
-    {
+    public function __construct() 
+    { 
         $this->domain = $_SERVER['HTTP_HOST'];
         $this->path = $_SERVER['REQUEST_URI'];
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        
+        if ($_POST['_method']) {
+            $this->method = $_POST['_method'];
+        } else {
+            $this->method = $_SERVER['REQUEST_METHOD'];
+        }
+
+        if ($this->method === 'PUT' || $this->method === 'DELETE') {
+            parse_str(file_get_contents('php://input'), $this->putOrDeleteData);
+        }
+
         $this->params = new FilteredMap(
-            array_merge($_POST, $_GET)
+            array_merge($_POST, $_GET, $this->putOrDeleteData)
         );
+
         $this->cookies = new FilteredMap($_COOKIE);
     }
-
+    
     public function getUrl(): string
     {
         return $this->domain . $this->path;
@@ -41,16 +51,6 @@ class Request
     public function getMethod(): string
     {
         return $this->method;
-    }
-
-    public function isPost(): bool
-    {
-        return $this->method === self::POST;
-    }
-
-    public function isGet(): bool
-    {
-        return $this->method === self::GET;
     }
 
     public function getParams(): FilteredMap

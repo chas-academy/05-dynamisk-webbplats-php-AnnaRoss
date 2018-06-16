@@ -10,10 +10,27 @@ class ArticleModel extends AbstractModel
 {
     const CLASSNAME = '\App\Interfaces\ArticleInterface';
 
+    public function get($id)
+    {
+        $query = 'SELECT * FROM articles WHERE id = :id';
+
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'id' => $id,
+        ];
+
+        $statementHandle->execute($params);
+        
+        return $statementHandle->fetchObject(self::CLASSNAME);
+    }
+
     public function getAll(): array
     {
         $query = 'SELECT * FROM articles';
+
         $statementHandle = $this->db->prepare($query);
+
         $statementHandle->execute();
 
         return $statementHandle->fetchAll(PDO::FETCH_CLASS, self::CLASSNAME);
@@ -33,15 +50,34 @@ class ArticleModel extends AbstractModel
         
         $statementHandle->execute($params);
 
-        return $this->find($this->db->lastInsertId());
+        return $this->get($this->db->lastInsertId());
     }
 
-    public function find($id)
-    {
-        $query = 'SELECT * FROM articles WHERE id = :id';
-        $statementHandle = $this->db->prepare($query);
-        $statementHandle->execute(['id' => $id]);
+    public function update($id, $headline, $content)
+    {   
+        $query = 'UPDATE articles SET headline = :headline, content = :content WHERE id = :id';
 
-        return $statementHandle->fetchObject(self::CLASSNAME);
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'id' => $id,
+            'headline' => $headline,
+            'content' => $content
+        ];
+
+        $statementHandle->execute($params);
+    }
+
+    public function delete($id)
+    {   
+        $query = 'DELETE FROM articles WHERE id = :id';
+
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'id' => $id,
+        ];
+
+        $statementHandle->execute($params);
     }
 }
