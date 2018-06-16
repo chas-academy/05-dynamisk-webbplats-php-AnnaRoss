@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\AbstractController;
 use App\Models\ArticleModel;
+use App\Models\CategoryModel;
+use App\Models\ArticleCategoryModel;
 
 class ArticleController extends AbstractController
 {
@@ -22,8 +24,12 @@ class ArticleController extends AbstractController
         $articleModel = new ArticleModel();
         $articles = $articleModel->getAll();
 
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
+
         return $this->render('views/articles.html', [
-            'articles' => $articles 
+            'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 
@@ -32,10 +38,14 @@ class ArticleController extends AbstractController
         $params = $this->request->getParams();
         $headline = $params->get('headline');
         $content = $params->get('content');
+        $categoryId = $params->get('categoryId');
 
         $articleModel = new ArticleModel();
         $newArticle = $articleModel->create($headline, $content);
 
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryModel->create($newArticle->getId(), $categoryId);
+        
         return $this->getAll();
     }
 

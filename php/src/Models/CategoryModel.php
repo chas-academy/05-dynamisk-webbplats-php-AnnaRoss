@@ -4,30 +4,31 @@ namespace App\Models;
 
 use PDO;
 use App\Models\AbstractModel;
-use App\Interfaces\ArticleInterface;
+use App\Interfaces\CategoryInterface;
 
-class ArticleModel extends AbstractModel
+class CategoryModel extends AbstractModel
 {
-    const CLASSNAME = '\App\Interfaces\ArticleInterface';
+    const CLASSNAME = '\App\Interfaces\CategoryInterface';
 
     public function get($id)
     {
-        $query = 'SELECT * FROM articles WHERE id = :id';
+        $query = 'SELECT * FROM categories WHERE id = :id';
 
         $statementHandle = $this->db->prepare($query);
 
         $params = [
-            'id' => $id,
+            'id' => $id
         ];
-
+            
         $statementHandle->execute($params);
-        
+
         return $statementHandle->fetchObject(self::CLASSNAME);
     }
 
     public function getAll(): array
     {
-        $query = 'SELECT * FROM articles';
+        $query = 'SELECT * FROM categories';
+
         $statementHandle = $this->db->prepare($query);
 
         $statementHandle->execute();
@@ -35,16 +36,14 @@ class ArticleModel extends AbstractModel
         return $statementHandle->fetchAll(PDO::FETCH_CLASS, self::CLASSNAME);
     }
 
-    public function create($headline, $content)
+    public function create($title)
     {
-        $query = 'INSERT INTO articles (headline, content, publication_date) VALUES (:headline, :content, :publication_date)';
+        $query = 'INSERT INTO categories (title) VALUES (:title)';
         
         $statementHandle = $this->db->prepare($query);
 
         $params = [
-            'headline' => $headline,
-            'content' => $content,
-            'publication_date' => date("Y-m-d H:i:s")
+        'title' => $title
         ];
         
         $statementHandle->execute($params);
@@ -52,25 +51,23 @@ class ArticleModel extends AbstractModel
         return $this->get($this->db->lastInsertId());
     }
 
-    public function update($id, $headline, $content)
+    public function update($id, $title)
     {   
-        $query = 'UPDATE articles SET headline = :headline, content = :content WHERE id = :id';
+        $query = 'UPDATE categories SET title = :title WHERE id = :id';
 
         $statementHandle = $this->db->prepare($query);
 
         $params = [
-            'id' => $id,
-            'headline' => $headline,
-            'content' => $content
+            'title' => $title
         ];
-
+            
         $statementHandle->execute($params);
     }
 
     public function delete($id)
     {   
-        $query = 'DELETE FROM articles WHERE id = :id';
-
+        $query = 'DELETE FROM categories WHERE id = :id';
+                
         $statementHandle = $this->db->prepare($query);
 
         $params = [

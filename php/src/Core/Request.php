@@ -21,7 +21,7 @@ class Request
         } else {
             $this->method = $_SERVER['REQUEST_METHOD'];
         }
-
+    
         if ($this->method === 'PUT' || $this->method === 'DELETE') {
             parse_str(file_get_contents('php://input'), $this->putOrDeleteData);
         }

@@ -1,8 +1,14 @@
 <?php include('views/header.html')?>
-
 <form method="POST">
     <fieldset>
         <legend>Write a new blog post!</legend>
+        <select name="categoryId" id="category" required>
+                <?php foreach ($params['categories'] as $category): ?>
+                <option value=<?php echo $category->getId(); ?>>
+                        <?php echo $category->getTitle(); ?>
+                </option>
+                <?php endforeach; ?>
+        </select>
 
         <label for="headline">Headline: </label>
         <input
@@ -14,7 +20,7 @@
             required
         />
         <br>
-
+       
         <label for="content">Content: </label>
         <textarea
             type="text"
