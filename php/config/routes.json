@@ -10,11 +10,26 @@
       "params": {
         "id": "number"
       }
+    },
+    "categories": {
+      "controller" : "Category",
+      "methodToCall": "getAll"
+    },
+    "categories/:id": {
+      "controller" : "Category",
+      "methodToCall": "get",
+      "params": {
+        "id": "number"
+      }
     }
   },
   "POST": {
     "articles": {
       "controller": "Article",
+      "methodToCall": "create"
+    },
+    "categories": {
+      "controller" : "Category",
       "methodToCall": "create"
     }
   },
@@ -26,6 +41,13 @@
         "id": "number",
         "method": "string"
       }
+    },
+    "categories/:id": {
+      "controller" : "Category",
+      "methodToCall": "update",
+      "params": {
+        "id": "number"
+      }
     }
   },
   "DELETE": {
@@ -35,6 +57,13 @@
       "params": {
         "id": "number",
         "method": "string"
+      }
+    },
+    "categories/:id": {
+      "controller" : "Category",
+      "methodToCall": "delete",
+      "params": {
+        "id": "number"
       }
     }
   }

@@ -43,7 +43,7 @@ class CategoryModel extends AbstractModel
         $statementHandle = $this->db->prepare($query);
 
         $params = [
-        'title' => $title
+            'title' => $title
         ];
         
         $statementHandle->execute($params);
@@ -58,6 +58,7 @@ class CategoryModel extends AbstractModel
         $statementHandle = $this->db->prepare($query);
 
         $params = [
+            'id' => $id,
             'title' => $title
         ];
             

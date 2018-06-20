@@ -1,4 +1,18 @@
 <?php include('views/header.html')?>
+<form method="POST" action="/categories">
+    <label for="title">Name of new category: </label>
+    <input 
+        type="text"
+        name="title"
+        id="title"
+        minlength="2"
+        maxlength="30"
+        required
+    />
+
+    <button>save cat</button>
+</form>
+
 <form method="POST">
     <fieldset>
         <legend>Write a new blog post!</legend>

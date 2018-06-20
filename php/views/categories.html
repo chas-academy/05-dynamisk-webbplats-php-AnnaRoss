@@ -1,0 +1,26 @@
+
+<?php include('views/header.html')?>
+<form method="POST">
+    <label for="title">Name of new category: </label>
+    <input 
+        type="text"
+        name="title"
+        id="title"
+        minlength="2"
+        maxlength="30"
+        required
+    />
+
+    <button>save cat</button>
+</form>
+
+<?php foreach ($params['categories'] as $category): ?>
+<ul>    
+    <li>
+        <a href=<?php echo '/categories/' . $category->getId();?> >
+            <?php echo $category->getTitle(); ?>
+        </a>
+    </li>
+</ul>
+<?php endforeach; ?>
+<?php include('views/footer.html') ?>

@@ -44,7 +44,7 @@ class ArticleController extends AbstractController
         $newArticle = $articleModel->create($headline, $content);
 
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->create($newArticle->getId(), $categoryId);
+        $articleCategoryModel->createRelationship($newArticle->getId(), $categoryId);
         
         return $this->getAll();
     }
@@ -62,7 +62,10 @@ class ArticleController extends AbstractController
     }
 
     public function delete($id)
-    {
+    {   
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryModel->deleteRelationship($id);
+
         $articleModel = new ArticleModel();
         $articleModel->delete($id);
 
