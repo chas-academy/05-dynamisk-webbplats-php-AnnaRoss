@@ -6,7 +6,24 @@ use PDO;
 use App\Models\AbstractModel;
 
 class ArticleCategoryModel extends AbstractModel
-{
+{   
+    public function getRelated($id)
+    {
+        $query = 'SELECT category_id FROM article_category WHERE article_id = :article_id';
+        
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'article_id' => $id
+        ];
+
+        $statementHandle->execute($params);
+
+        $result = $statementHandle->fetch(PDO::FETCH_ASSOC);
+
+        return $result['category_id'];
+    }
+
     public function createRelation($articleId, $categoryId)
     {
         $query = 'INSERT INTO article_category (article_id, category_id) VALUES (:article_id, :category_id)';

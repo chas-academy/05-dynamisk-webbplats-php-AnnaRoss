@@ -19,6 +19,12 @@ class ArticleController extends AbstractController
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAll();
 
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryId = $articleCategoryModel->getRelated($id);
+        $category = $categoryModel->get($articleCategoryId);
+
+        $article->setCategory($category);
+
         $tagModel = new TagModel();
         $allTags = $tagModel->getAll();
 
@@ -47,6 +53,7 @@ class ArticleController extends AbstractController
 
         return $this->render('views/article.html', [
             'article' => $article,
+            'category' => $category,
             'categories' => $categories,
             'tags' => $tags,
         ]);
@@ -59,6 +66,15 @@ class ArticleController extends AbstractController
 
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAll();
+
+        foreach ($articles as $article) {
+            $articleCategoryModel = new ArticleCategoryModel();
+            $articleCategoryId = $articleCategoryModel->getRelated($article->getId());
+            $category = $categoryModel->get($articleCategoryId);
+    
+            $article->setCategory($category);
+        }
+
         
         $tagModel = new TagModel();
         $tags = $tagModel->getAll();
@@ -82,7 +98,7 @@ class ArticleController extends AbstractController
         $newArticle = $articleModel->create($headline, $content);
 
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->createRelation($articleId, $categoryId);
+        $articleCategoryModel->createRelation($newArticle->getId(), $categoryId);
 
         $this->setTagRelations($newArticle->getId(), $tagIds);
         
@@ -124,6 +140,16 @@ class ArticleController extends AbstractController
         $articleModel->delete($id);
 
         return $this->getAll();
+    }
+
+    public function addCategoryToArticleInterface($articleId)
+    {
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryId = $articleCategoryModel->getRelated($articleId);
+
+        $category = $categoryModel->get($articleCategoryId);
+    
+        $article->setCategory($category);
     }
 
     public function setCategoryRelation($articleId, $categoryId)

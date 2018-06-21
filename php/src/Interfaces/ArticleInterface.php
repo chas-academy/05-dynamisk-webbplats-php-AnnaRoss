@@ -6,6 +6,8 @@ class ArticleInterface
 {
     private $id, $headline, $content, $publication_date;
 
+    protected $category;
+
     public function getId(): int
     {
         return $this->id;
@@ -24,5 +26,13 @@ class ArticleInterface
     public function getPublicationDate(): string
     {
         return $this->publication_date;
+    }
+
+    public function setCategory($category) {
+        $this->category = $category;
+    }
+
+    public function getCategory() {
+        return $this->category;
     }
 }

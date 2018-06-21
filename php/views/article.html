@@ -7,6 +7,11 @@
         <?php echo $params['article']->getContent(); ?>
     </p>
     <footer>
+        <a href=<?php echo '/categories/' . $params['article']->getCategory()
+           ->getId(); ?>>
+            <?php echo $params['article']->getCategory()->getTitle(); ?>
+        </a>
+       
         <time>
             <?php echo $article->getPublicationDate(); ?>
         </time>
