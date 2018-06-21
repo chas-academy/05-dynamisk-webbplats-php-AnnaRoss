@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\AbstractController;
 use App\Models\CategoryModel;
+use App\Models\ArticleModel;
 use App\Models\ArticleCategoryModel;
 
 class CategoryController extends AbstractController
@@ -13,8 +14,21 @@ class CategoryController extends AbstractController
         $categoryModel = new CategoryModel();
         $category = $categoryModel->get($id);
 
+        $articleCategoryModel  = new ArticleCategoryModel();
+        $articleIds = $articleCategoryModel->getRelatedArticles($id);
+
+        $articleModel = new ArticleModel();
+        $articles = [];
+
+        foreach ($articleIds as $articleId) {
+            $article = $articleModel->get($articleId['article_id']);
+            $article->setCategory($category);
+            $articles[] = $article;
+        }
+        
         return $this->render('views/category.html', [
-            'category' => $category
+            'category' => $category,
+            'articles' => $articles,
         ]);
     }
 

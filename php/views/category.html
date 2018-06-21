@@ -21,4 +21,27 @@
             <input type="hidden" name="_method" value="DELETE" />
             <button>Delete</button>
     </form>
+    
+    <?php foreach ($params['articles'] as $article): ?>
+    <article>
+    
+        <a href=<?php echo '/articles/' . $article->getId();?> >
+            <h2>
+                <?php echo $article->getHeadline(); ?>
+            </h2>
+        </a>
+        <p>
+            <?php echo $article->getContent(); ?>
+        </p>
+        <footer>
+            <a href=<?php echo '/categories/' . $article->getCategory()->getId(); ?>>
+                <?php echo $article->getCategory()->getTitle(); ?>
+            </a>
+            <time>
+                    <?php echo $article->getPublicationDate(); ?>
+            </time>
+        </footer>
+    </article>
+    <?php endforeach; ?>
+
 <?php include('views/footer.html') ?>

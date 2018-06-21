@@ -28,11 +28,13 @@ class ArticleInterface
         return $this->publication_date;
     }
 
-    public function setCategory($category) {
+    public function setCategory($category)
+    {
         $this->category = $category;
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return $this->category;
     }
 }

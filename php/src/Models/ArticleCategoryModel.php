@@ -7,14 +7,14 @@ use App\Models\AbstractModel;
 
 class ArticleCategoryModel extends AbstractModel
 {   
-    public function getRelated($id)
+    public function getRelatedCategory($articleId)
     {
         $query = 'SELECT category_id FROM article_category WHERE article_id = :article_id';
         
         $statementHandle = $this->db->prepare($query);
 
         $params = [
-            'article_id' => $id
+            'article_id' => $articleId
         ];
 
         $statementHandle->execute($params);
@@ -22,6 +22,21 @@ class ArticleCategoryModel extends AbstractModel
         $result = $statementHandle->fetch(PDO::FETCH_ASSOC);
 
         return $result['category_id'];
+    }
+
+    public function getRelatedArticles($categoryId)
+    {
+        $query = 'SELECT article_id FROM article_category WHERE category_id = :category_id';
+        
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'category_id' => $categoryId
+        ];
+
+        $statementHandle->execute($params);
+
+        return $statementHandle->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function createRelation($articleId, $categoryId)

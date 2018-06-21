@@ -26,8 +26,10 @@
         <label for="categoryId">Select category: </label>
         <select name="categoryId" id="category">
             <?php foreach ($params['categories'] as $category): ?>
-                <option 
-                    value=<?php echo $category->getId(); ?>>
+                <option value="<?php echo $category->getId(); ?>"
+                        <?php if ($category->getId() ==  $params['article']->getCategory()
+                        ->getId()): echo 'selected'; endif; ?>
+                        >
                         <?php echo $category->getTitle(); ?>
                 </option>
             <?php endforeach; ?>

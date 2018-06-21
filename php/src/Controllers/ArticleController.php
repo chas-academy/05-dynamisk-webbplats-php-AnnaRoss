@@ -20,7 +20,7 @@ class ArticleController extends AbstractController
         $categories = $categoryModel->getAll();
 
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryId = $articleCategoryModel->getRelated($id);
+        $articleCategoryId = $articleCategoryModel->getRelatedCategory($id);
         $category = $categoryModel->get($articleCategoryId);
 
         $article->setCategory($category);
@@ -69,13 +69,12 @@ class ArticleController extends AbstractController
 
         foreach ($articles as $article) {
             $articleCategoryModel = new ArticleCategoryModel();
-            $articleCategoryId = $articleCategoryModel->getRelated($article->getId());
+            $articleCategoryId = $articleCategoryModel->getRelatedCategory($article->getId());
             $category = $categoryModel->get($articleCategoryId);
     
             $article->setCategory($category);
         }
 
-        
         $tagModel = new TagModel();
         $tags = $tagModel->getAll();
 
@@ -145,7 +144,7 @@ class ArticleController extends AbstractController
     public function addCategoryToArticleInterface($articleId)
     {
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryId = $articleCategoryModel->getRelated($articleId);
+        $articleCategoryId = $articleCategoryModel->getRelatedCategory($articleId);
 
         $category = $categoryModel->get($articleCategoryId);
     
