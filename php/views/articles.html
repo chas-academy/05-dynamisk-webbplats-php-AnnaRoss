@@ -1,13 +1,7 @@
 <?php include('views/header.html')?>
 <form method="POST" action="/categories">
     <label for="title">Name of new category: </label>
-    <input 
-        type="text"
-        name="title"
-        id="title"
-        minlength="2"
-        maxlength="30"
-        required
+    <input type="text" name="title" id="title" minlength="2" maxlength="30" required
     />
 
     <button>save cat</button>
@@ -16,49 +10,34 @@
 <form method="POST">
     <fieldset>
         <legend>Write a new blog post!</legend>
+
         <label for="categoryId">Select category: </label>
         <select name="categoryId" id="category" required>
-                <?php foreach ($params['categories'] as $category): ?>
-                <option value=<?php echo $category->getId(); ?>>
-                        <?php echo $category->getTitle(); ?>
-                </option>
-                <?php endforeach; ?>
+            <?php foreach ($params['categories'] as $category): ?>
+            <option value=<?php echo $category->getId(); ?>>
+                <?php echo $category->getTitle(); ?>
+            </option>
+            <?php endforeach; ?>
         </select>
+        <br>
 
         <label for="headline">Headline: </label>
-        <input
-            type="text"
-            name="headline"
-            id="headline"
-            maxlength="40"
-            placeholder="A very cool headline"
-            required
-        />
+        <input type="text" name="headline" id="headline" maxlength="40" placeholder="A very cool headline"
+            required />
         <br>
-       
+
         <label for="content">Content: </label>
-        <textarea
-            type="text"
-            name="content" 
-            id="content"
-            minlength="10"
-            maxlength="2000"
-            wrap="hard"
-            cols="40"
-            rows="10"
-            required
-        ></textarea>
+        <textarea type="text" name="content" id="content" minlength="2" maxlength="2000"
+            wrap="hard" cols="40" rows="10" required></textarea>
         <br>
 
         <label for="tags">Add tags: </label>
         <select id="tags" name="tagIds[]" multiple>
-
             <?php foreach ($params['tags'] as $tag): ?>
             <option value="<?php echo $tag->getId(); ?>">
-                    <?php echo $tag->getTitle(); ?>
+                <?php echo $tag->getTitle(); ?>
             </option>
             <?php endforeach; ?>
-
         </select>
 
     </fieldset>
@@ -81,7 +60,7 @@
             <?php echo $article->getCategory()->getTitle(); ?>
         </a>
         <time>
-                <?php echo $article->getPublicationDate(); ?>
+            <?php echo $article->getPublicationDate(); ?>
         </time>
     </footer>
 </article>

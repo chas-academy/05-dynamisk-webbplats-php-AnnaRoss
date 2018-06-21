@@ -42,13 +42,13 @@ class ArticleController extends AbstractController
             ];
 
             foreach ($articleTagIds as $articleTagId) {
+                
                 if ($tag->getId() == $articleTagId['tag_id']) {
                     $tagToPush['selected'] = true;
                 }
             }
             
             $tags[] = $tagToPush;
-
         }
 
         return $this->render('views/article.html', [

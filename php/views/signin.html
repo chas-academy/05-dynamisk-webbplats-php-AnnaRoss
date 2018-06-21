@@ -1,0 +1,14 @@
+<form method="POST" action="/auth">
+
+    <label for="email">email: </label>
+    <input name="email" type="email" id="email" required />
+    </br>
+
+    <label for="password">password: </label>
+    <input name="password" type="password" id="password" required pattern="^[A-Za-z0-9_]{1,32}$"
+    />
+    </br>
+
+    <button>sign in</button>
+
+</form>
