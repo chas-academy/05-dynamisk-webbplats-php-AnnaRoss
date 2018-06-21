@@ -4,11 +4,11 @@ namespace App\Models;
 
 use PDO;
 use App\Models\AbstractModel;
-use App\Interfaces\CategoryInterface;
+use App\Interfaces\CategoryTagInterface;
 
 class CategoryModel extends AbstractModel
 {
-    const CLASSNAME = '\App\Interfaces\CategoryInterface';
+    const CLASSNAME = '\App\Interfaces\CategoryTagInterface';
 
     public function get($id)
     {
