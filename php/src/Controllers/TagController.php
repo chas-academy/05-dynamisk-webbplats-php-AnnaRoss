@@ -51,8 +51,8 @@ class TagController extends AbstractController
     public function delete($id)
     {   
         $articleTagModel = new ArticleTagModel();
-        $articleTagModel->deleteRelationship($id);
-
+        $articleTagModel->deleteArticleRelations($id);
+        
         $tagModel = new TagModel();
         $tagModel->delete($id);
 

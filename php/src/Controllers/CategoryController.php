@@ -51,7 +51,7 @@ class CategoryController extends AbstractController
     public function delete($id)
     {   
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->deleteRelationship($id);
+        $articleCategoryModel->deleteRelation($id);
 
         $categoryModel = new CategoryModel();
         $categoryModel->delete($id);

@@ -1,9 +1,33 @@
 <?php include('views/header.html')?>
+<article>
+    <h2>
+        <?php echo $params['article']->getHeadline(); ?>
+    </h2>
+    <p>
+        <?php echo $params['article']->getContent(); ?>
+    </p>
+    <footer>
+        <time>
+            <?php echo $article->getPublicationDate(); ?>
+        </time>
+    </footer>
+</article>
 
 <form method="POST">
     <input type="hidden" name="_method" value="PUT" />
     <fieldset>
         <legend>Edit article: </legend>
+
+        <label for="categoryId">Select category: </label>
+        <select name="categoryId" id="category">
+            <?php foreach ($params['categories'] as $category): ?>
+                <option 
+                    value=<?php echo $category->getId(); ?>>
+                        <?php echo $category->getTitle(); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
         <label for="headline">Headline: </label>
         <input 
             type="text"
@@ -15,6 +39,7 @@
             required
         />
         <br>
+
         <label for="content">Content: </label>
         <textarea
             type="text"
@@ -28,6 +53,7 @@
             required
         ><?php echo $params['article']->getContent(); ?></textarea>
         <br>
+
         <label for="tags">Add tags: </label>
         <select id="tags" name="tagIds[]" multiple>
             <?php foreach ($params['tags'] as $tag): ?>
@@ -39,27 +65,17 @@
             </option>
             <?php endforeach; ?>
         </select>
-        <button>save</button>
+
+        <button>save updates</button>
+
     </fieldset>
 </form>
 
 <form method="POST">
-        <input type="hidden" name="_method" value="DELETE" />
-        <button>Delete</button>
+    <input type="hidden" name="_method" value="DELETE" />
+    <input type="hidden" name="tagIds[]" value="" />
+    <input type="hidden" name="categoryId" value="" />
+    <button>Delete</button>
 </form>
-
-<article>
-    <h2>
-        <?php echo $params['article']->getHeadline(); ?>
-    </h2>
-    <p>
-        <?php echo $params['article']->getContent(); ?>
-    </p>
-    <footer>
-        <time>
-
-        </time>
-    </footer>
-</article>
 
 <?php include('views/footer.html') ?>

@@ -15,7 +15,10 @@ class ArticleController extends AbstractController
     {   
         $articleModel = new ArticleModel();
         $article = $articleModel->get($id);
-        
+
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
+
         $tagModel = new TagModel();
         $allTags = $tagModel->getAll();
 
@@ -37,13 +40,15 @@ class ArticleController extends AbstractController
                     $tagToPush['selected'] = true;
                 }
             }
-
+            
             $tags[] = $tagToPush;
+
         }
 
         return $this->render('views/article.html', [
             'article' => $article,
-            'tags' => $tags
+            'categories' => $categories,
+            'tags' => $tags,
         ]);
     }
 
@@ -77,10 +82,9 @@ class ArticleController extends AbstractController
         $newArticle = $articleModel->create($headline, $content);
 
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->createRelationship($newArticle->getId(), $categoryId);
+        $articleCategoryModel->createRelation($articleId, $categoryId);
 
-        $articleTagModel = new ArticleTagModel();
-        $articleTagModel->createRelationship($newArticle->getId(), $tagIds);
+        $this->setTagRelations($newArticle->getId(), $tagIds);
         
         return $this->getAll();
     }
@@ -90,24 +94,59 @@ class ArticleController extends AbstractController
         $params = $this->request->getParams();
         $headline = $params->get('headline');
         $content = $params->get('content');
+        $categoryId = $params->get('categoryId');
+        $tagIds = $params->get('tagIds');
+        
+        $articleCategoryModel = new ArticleCategoryModel();
+        $this->removeCategoryRelation($id);
+        $this->setCategoryRelation($id, $categoryId);
+
+        $this->removeTagRelations($id);
+        $this->setTagRelations($id, $tagIds);
 
         $articleModel = new ArticleModel();
-        $updatedArticle = $articleModel->update($id, $headline, $content);
+        $articleModel->update($id, $headline, $content);
 
         return $this->get($id);
     }
 
     public function delete($id)
     {   
+        $params = $this->request->getParams();
+        var_dump($params);
+        
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->deleteRelationship($id);
+        $articleCategoryModel->deleteRelation($id);
 
-        $articleTagModel = new ArticleTagModel();
-        $articleTagModel->deleteRelationship($id);
+        $this->removeTagRelations($id);
 
         $articleModel = new ArticleModel();
         $articleModel->delete($id);
 
         return $this->getAll();
     }
+
+    public function setCategoryRelation($articleId, $categoryId)
+    {
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryModel->createRelation($articleId, $categoryId);
+    }
+
+    public function removeCategoryRelation($articleId)
+    {
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleCategoryModel->deleteRelation($articleId);
+    }
+
+    public function setTagRelations($articleId, $tagIds)
+    {
+        $articleTagModel = new ArticleTagModel();
+        $articleTagModel->createRelations($articleId, $tagIds);
+    }
+
+    public function removeTagRelations($articleId)
+    {
+        $articleTagModel = new ArticleTagModel();
+        $articleTagModel->deleteRelations($articleId, $tagIds);
+    } 
 }
