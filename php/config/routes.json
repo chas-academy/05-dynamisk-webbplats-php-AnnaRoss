@@ -21,6 +21,17 @@
       "params": {
         "id": "number"
       }
+    },
+    "tags": {
+      "controller" : "Tag",
+      "methodToCall": "getAll"
+    },
+    "tags/:id": {
+      "controller" : "Tag",
+      "methodToCall": "get",
+      "params": {
+        "id": "number"
+      }
     }
   },
   "POST": {
@@ -30,6 +41,10 @@
     },
     "categories": {
       "controller" : "Category",
+      "methodToCall": "create"
+    },
+    "tags": {
+      "controller" : "Tag",
       "methodToCall": "create"
     }
   },
@@ -48,6 +63,13 @@
       "params": {
         "id": "number"
       }
+    },
+    "tags/:id": {
+      "controller" : "Tag",
+      "methodToCall": "update",
+      "params": {
+        "id": "number"
+      }
     }
   },
   "DELETE": {
@@ -61,6 +83,13 @@
     },
     "categories/:id": {
       "controller" : "Category",
+      "methodToCall": "delete",
+      "params": {
+        "id": "number"
+      }
+    },
+    "tags/:id": {
+      "controller" : "Tag",
       "methodToCall": "delete",
       "params": {
         "id": "number"

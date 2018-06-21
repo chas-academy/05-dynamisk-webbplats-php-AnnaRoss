@@ -28,6 +28,17 @@
             required
         ><?php echo $params['article']->getContent(); ?></textarea>
         <br>
+        <label for="tags">Add tags: </label>
+        <select id="tags" name="tagIds[]" multiple>
+            <?php foreach ($params['tags'] as $tag): ?>
+            <option 
+                value="<?php echo $tag['id'] ?>"
+                <?php if ($tag['selected']): echo 'selected'; endif; ?>
+            >
+                    <?php echo $tag['title'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
         <button>save</button>
     </fieldset>
 </form>

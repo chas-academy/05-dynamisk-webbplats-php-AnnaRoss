@@ -1,0 +1,19 @@
+<?php include('views/header.html')?>
+<form method="POST">
+    <label for="title">Name of new tag: </label>
+    <input type="text" name="title" id="title" minlength="2" maxlength="30" required
+    />
+
+    <button>save tag</button>
+</form>
+
+<?php foreach ($params['tags'] as $tag): ?>
+<ul>
+    <li>
+        <a href=<?php echo '/tags/' . $tag->getId();?> >
+            <?php echo $tag->getTitle(); ?>
+        </a>
+    </li>
+</ul>
+<?php endforeach; ?>
+<?php include('views/footer.html') ?>

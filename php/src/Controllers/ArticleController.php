@@ -5,7 +5,9 @@ namespace App\Controllers;
 use App\Controllers\AbstractController;
 use App\Models\ArticleModel;
 use App\Models\CategoryModel;
+use App\Models\TagModel;
 use App\Models\ArticleCategoryModel;
+use App\Models\ArticleTagModel;
 
 class ArticleController extends AbstractController
 {
@@ -13,9 +15,35 @@ class ArticleController extends AbstractController
     {   
         $articleModel = new ArticleModel();
         $article = $articleModel->get($id);
+        
+        $tagModel = new TagModel();
+        $allTags = $tagModel->getAll();
+
+        $articleTagModel = new ArticleTagModel();
+        $articleTagIds = $articleTagModel->getRelated($id);
+
+        $tags = [];
+
+        foreach ($allTags as $tag) {
+
+            $tagToPush = [
+                'id' => $tag->getId(),
+                'title' => $tag->getTitle(),
+                'selected' => false
+            ];
+
+            foreach ($articleTagIds as $articleTagId) {
+                if ($tag->getId() == $articleTagId['tag_id']) {
+                    $tagToPush['selected'] = true;
+                }
+            }
+
+            $tags[] = $tagToPush;
+        }
 
         return $this->render('views/article.html', [
-            'article' => $article 
+            'article' => $article,
+            'tags' => $tags
         ]);
     }
 
@@ -26,10 +54,14 @@ class ArticleController extends AbstractController
 
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAll();
+        
+        $tagModel = new TagModel();
+        $tags = $tagModel->getAll();
 
         return $this->render('views/articles.html', [
             'articles' => $articles,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ]);
     }
 
@@ -39,12 +71,16 @@ class ArticleController extends AbstractController
         $headline = $params->get('headline');
         $content = $params->get('content');
         $categoryId = $params->get('categoryId');
+        $tagIds = $params->get('tagIds');
 
         $articleModel = new ArticleModel();
         $newArticle = $articleModel->create($headline, $content);
 
         $articleCategoryModel = new ArticleCategoryModel();
         $articleCategoryModel->createRelationship($newArticle->getId(), $categoryId);
+
+        $articleTagModel = new ArticleTagModel();
+        $articleTagModel->createRelationship($newArticle->getId(), $tagIds);
         
         return $this->getAll();
     }
@@ -65,6 +101,9 @@ class ArticleController extends AbstractController
     {   
         $articleCategoryModel = new ArticleCategoryModel();
         $articleCategoryModel->deleteRelationship($id);
+
+        $articleTagModel = new ArticleTagModel();
+        $articleTagModel->deleteRelationship($id);
 
         $articleModel = new ArticleModel();
         $articleModel->delete($id);
