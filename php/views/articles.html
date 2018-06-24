@@ -48,18 +48,23 @@
 
 <?php foreach ($params['articles'] as $article): ?>
 <article>
-    <a href=<?php echo '/articles/' . $article->getId();?> >
-        <h2>
-            <?php echo $article->getHeadline(); ?>
-        </h2>
-    </a>
+    <header>
+        <a href=<?php echo '/articles/' . $article->getId();?> >
+            <h2>
+                <?php echo $article->getHeadline(); ?>
+            </h2>
+        </a>
+        <p>Category:
+            <a href=<?php echo '/categories/' . $article->getCategory()->getId(); ?>>
+                <?php echo $article->getCategory()->getTitle(); ?>
+            </a>
+        </p>
+    </header>
     <p>
         <?php echo $article->getContent(); ?>
     </p>
     <footer>
-        <a href=<?php echo '/categories/' . $article->getCategory()->getId(); ?>>
-            <?php echo $article->getCategory()->getTitle(); ?>
-        </a>
+        <p>Tags: </p>
         <ul>
             <?php foreach($article->getTags() as $tag): ?>
             <li>
@@ -70,6 +75,7 @@
             <?php endforeach; ?>
         </ul>
         <time>
+            Published:
             <?php echo $article->getPublicationDate(); ?>
         </time>
     </footer>

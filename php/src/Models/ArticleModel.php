@@ -35,16 +35,17 @@ class ArticleModel extends AbstractModel
         return $statementHandle->fetchAll(PDO::FETCH_CLASS, self::CLASSNAME);
     }
 
-    public function create($headline, $content)
+    public function create($headline, $content, $userId)
     {
-        $query = 'INSERT INTO articles (headline, content, publication_date) VALUES (:headline, :content, :publication_date)';
+        $query = 'INSERT INTO articles (headline, content, publication_date, user_id) VALUES (:headline, :content, :publication_date, :user_id)';
         
         $statementHandle = $this->db->prepare($query);
 
         $params = [
             'headline' => $headline,
             'content' => $content,
-            'publication_date' => date("Y-m-d H:i:s")
+            'publication_date' => date("Y-m-d H:i:s"),
+            'user_id' => $userId
         ];
         
         $statementHandle->execute($params);

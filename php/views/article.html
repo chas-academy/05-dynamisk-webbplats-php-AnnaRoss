@@ -1,16 +1,21 @@
 <?php include('views/header.html')?>
 
 <article>
-    <h2>
-        <?php echo $params['article']->getHeadline(); ?>
-    </h2>
+    <header>
+        <h2>
+            <?php echo $params['article']->getHeadline(); ?>
+        </h2>
+        <p>Category:
+            <a href=<?php echo '/categories/' . $params[ 'article']->getCategory() ->getId(); ?>>
+                <?php echo $params['article']->getCategory()->getTitle(); ?>
+            </a>
+        </p>
+    </header>
     <p>
         <?php echo $params['article']->getContent(); ?>
     </p>
     <footer>
-        <a href=<?php echo '/categories/' . $params[ 'article']->getCategory() ->getId(); ?>>
-            <?php echo $params['article']->getCategory()->getTitle(); ?>
-        </a>
+        <p>Tags:</p>
         <ul>
             <?php foreach($params['article']->getTags() as $tag): ?>
             <li>
@@ -21,6 +26,7 @@
             <?php endforeach; ?>
         </ul>
         <time>
+            Published:
             <?php echo $article->getPublicationDate(); ?>
         </time>
     </footer>

@@ -1,11 +1,14 @@
 <?php include('views/header.html')?>
+
+<?php if(isset($_SESSION['user'])): ?>
 <form method="POST">
-    <label for="title">Name of new category: </label>
+    <label for="title">New category: </label>
     <input type="text" name="title" id="title" minlength="2" maxlength="30" required
     />
 
-    <button>save cat</button>
+    <button>save</button>
 </form>
+<?php endif; ?>
 
 <?php foreach ($params['categories'] as $category): ?>
 <ul>
@@ -16,4 +19,5 @@
     </li>
 </ul>
 <?php endforeach; ?>
+
 <?php include('views/footer.html') ?>

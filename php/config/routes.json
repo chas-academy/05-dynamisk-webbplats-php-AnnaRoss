@@ -1,5 +1,9 @@
 {
   "GET": {
+    "": {
+      "controller": "Article",
+      "methodToCall": "getAll"
+    },
     "articles": {
       "controller": "Article",
       "methodToCall": "getAll"
