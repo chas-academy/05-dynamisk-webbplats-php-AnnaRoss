@@ -12,26 +12,30 @@
       }
     },
     "categories": {
-      "controller" : "Category",
+      "controller": "Category",
       "methodToCall": "getAll"
     },
     "categories/:id": {
-      "controller" : "Category",
+      "controller": "Category",
       "methodToCall": "get",
       "params": {
         "id": "number"
       }
     },
     "tags": {
-      "controller" : "Tag",
+      "controller": "Tag",
       "methodToCall": "getAll"
     },
     "tags/:id": {
-      "controller" : "Tag",
+      "controller": "Tag",
       "methodToCall": "get",
       "params": {
         "id": "number"
       }
+    },
+    "auth/signout": {
+      "controller": "Auth",
+      "methodToCall": "signOut"
     }
   },
   "POST": {
@@ -40,12 +44,16 @@
       "methodToCall": "create"
     },
     "categories": {
-      "controller" : "Category",
+      "controller": "Category",
       "methodToCall": "create"
     },
     "tags": {
-      "controller" : "Tag",
+      "controller": "Tag",
       "methodToCall": "create"
+    },
+    "auth": {
+      "controller": "Auth",
+      "methodToCall": "signIn"
     }
   },
   "PUT": {
@@ -58,14 +66,14 @@
       }
     },
     "categories/:id": {
-      "controller" : "Category",
+      "controller": "Category",
       "methodToCall": "update",
       "params": {
         "id": "number"
       }
     },
     "tags/:id": {
-      "controller" : "Tag",
+      "controller": "Tag",
       "methodToCall": "update",
       "params": {
         "id": "number"
@@ -82,14 +90,14 @@
       }
     },
     "categories/:id": {
-      "controller" : "Category",
+      "controller": "Category",
       "methodToCall": "delete",
       "params": {
         "id": "number"
       }
     },
     "tags/:id": {
-      "controller" : "Tag",
+      "controller": "Tag",
       "methodToCall": "delete",
       "params": {
         "id": "number"

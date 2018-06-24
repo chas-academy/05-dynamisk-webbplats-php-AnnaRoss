@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Blog</title>
 </head>
 
 <body>
@@ -16,8 +16,14 @@
             <a href="/articles">articles</a>
             <a href="/categories">categories</a>
             <a href="/tags">tags</a>
-            <a href="#">sign in</a>
+
+            <?php if(isset($_SESSION[user])): ?>
+            <a href="/auth/signout">sign out</a>
+            <?php endif; ?>
         </nav>
 
+        <?php if(!isset($_SESSION[user])): ?>
+        <?php include('signin.html') ?>
+        <?php endif; ?>
     </header>
     <main>

@@ -15,6 +15,8 @@ function autoloader($classname)
 
 spl_autoload_register('autoloader');
 
+session_start();
+
 $router = new Router();
 $response = $router->getRoute(new Request());
 echo $response;

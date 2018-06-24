@@ -1,4 +1,5 @@
 <?php include('views/header.html')?>
+
 <article>
     <h2>
         <?php echo $params['article']->getHeadline(); ?>
@@ -7,17 +8,25 @@
         <?php echo $params['article']->getContent(); ?>
     </p>
     <footer>
-        <a href=<?php echo '/categories/' . $params['article']->getCategory()
-           ->getId(); ?>>
+        <a href=<?php echo '/categories/' . $params[ 'article']->getCategory() ->getId(); ?>>
             <?php echo $params['article']->getCategory()->getTitle(); ?>
         </a>
-       
+        <ul>
+            <?php foreach($params['article']->getTags() as $tag): ?>
+            <li>
+                <a href=<?php echo "/tags/" . $tag->getId(); ?>>
+                    <?php echo $tag->getTitle(); ?>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
         <time>
             <?php echo $article->getPublicationDate(); ?>
         </time>
     </footer>
 </article>
 
+<?php if(isset($_SESSION['user'])): ?>
 <form method="POST">
     <input type="hidden" name="_method" value="PUT" />
     <fieldset>
@@ -26,55 +35,35 @@
         <label for="categoryId">Select category: </label>
         <select name="categoryId" id="category">
             <?php foreach ($params['categories'] as $category): ?>
-                <option value="<?php echo $category->getId(); ?>"
-                        <?php if ($category->getId() ==  $params['article']->getCategory()
-                        ->getId()): echo 'selected'; endif; ?>
-                        >
-                        <?php echo $category->getTitle(); ?>
-                </option>
+            <option value="<?php echo $category->getId(); ?>" <?php if ($category->getId() == $params['article']->getCategory() ->getId()): echo 'selected';
+                endif; ?> >
+                <?php echo $category->getTitle(); ?>
+            </option>
             <?php endforeach; ?>
         </select>
 
         <label for="headline">Headline: </label>
-        <input 
-            type="text"
-            name="headline"
-            id="headline"
-            maxlength="40"
-            placeholder="A very cool headline"
-            value="<?php echo $params['article']->getHeadline(); ?>"
-            required
-        />
+        <input type="text" name="headline" id="headline" maxlength="40" placeholder="A very cool headline"
+            value="<?php echo $params['article']->getHeadline(); ?>" required />
         <br>
 
         <label for="content">Content: </label>
-        <textarea
-            type="text"
-            name="content" 
-            id="content"
-            minlength="10"
-            maxlength="2000"
-            wrap="hard"
-            cols="40"
-            rows="10"
-            required
-        ><?php echo $params['article']->getContent(); ?></textarea>
+        <textarea type="text" name="content" id="content" minlength="10" maxlength="2000"
+            wrap="hard" cols="40" rows="10" required><?php echo $params['article']->getContent(); ?></textarea>
         <br>
 
         <label for="tags">Add tags: </label>
         <select id="tags" name="tagIds[]" multiple>
             <?php foreach ($params['tags'] as $tag): ?>
-            <option 
-                value="<?php echo $tag['id'] ?>"
-                <?php if ($tag['selected']): echo 'selected'; endif; ?>
-            >
-                    <?php echo $tag['title'] ?>
+            <option value="<?php echo $tag['id'] ?>" <?php if ($tag[ 'selected']): echo
+                'selected'; endif; ?>
+                >
+                <?php echo $tag['title'] ?>
             </option>
             <?php endforeach; ?>
         </select>
 
         <button>save updates</button>
-
     </fieldset>
 </form>
 
@@ -84,5 +73,6 @@
     <input type="hidden" name="categoryId" value="" />
     <button>Delete</button>
 </form>
+<?php endif; ?>
 
 <?php include('views/footer.html') ?>
