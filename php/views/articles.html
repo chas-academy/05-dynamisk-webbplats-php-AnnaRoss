@@ -2,11 +2,18 @@
 
 <?php if(isset($_SESSION[user])): ?>
 <form method="POST" action="/categories">
-    <label for="title">Name of new category: </label>
+    <label for="title">New category: </label>
     <input type="text" name="title" id="title" minlength="2" maxlength="30" required
     />
 
     <button>save cat</button>
+</form>
+
+<form method="POST" action="/tags">
+    <label for="title">New tag: </label>
+    <input type="text" name="title" id="title" minlength="2" maxlength="30" required
+    />
+    <button>save tag</button>
 </form>
 
 <form method="POST">
@@ -54,11 +61,13 @@
                 <?php echo $article->getHeadline(); ?>
             </h2>
         </a>
+        <?php if($article->getCategory()): ?>
         <p>Category:
             <a href=<?php echo '/categories/' . $article->getCategory()->getId(); ?>>
                 <?php echo $article->getCategory()->getTitle(); ?>
             </a>
         </p>
+        <?php endif; ?>
     </header>
     <p>
         <?php echo $article->getContent(); ?>

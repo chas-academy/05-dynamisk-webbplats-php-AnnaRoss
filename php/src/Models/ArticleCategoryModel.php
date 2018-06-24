@@ -67,7 +67,7 @@ class ArticleCategoryModel extends AbstractModel
         $statementHandle->execute($params);
     }
 
-    public function deleteRelation($articleId)
+    public function deleteRelationToCategory($articleId)
     {
         $query = 'DELETE FROM article_category WHERE article_id = :article_id';
         
@@ -75,6 +75,19 @@ class ArticleCategoryModel extends AbstractModel
 
         $params = [
             'article_id' => $articleId
+        ];
+        
+        $statementHandle->execute($params);
+    }
+
+    public function deleteRelationToArticles($categoryId)
+    {
+        $query = 'DELETE FROM article_category WHERE category_id = :category_id';
+        
+        $statementHandle = $this->db->prepare($query);
+
+        $params = [
+            'category_id' => $categoryId
         ];
         
         $statementHandle->execute($params);

@@ -117,9 +117,11 @@ class ArticleController extends AbstractController
         $articleCategoryModel = new ArticleCategoryModel();
         $articleCategoryModel->createRelation($newArticle->getId(), $categoryId);
 
-        $this->setTagRelations($newArticle->getId(), $tagIds);
+        if ($tagIds) {
+            $this->setTagRelations($newArticle->getId(), $tagIds);
+        }
         
-        return $this->getAll();
+        return $this->redirect('/articles/' . $newArticle->getId());
     }
 
     public function update($id)
@@ -145,18 +147,16 @@ class ArticleController extends AbstractController
 
     public function delete($id)
     {   
-        $params = $this->request->getParams();
-        var_dump($params);
-        
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->deleteRelation($id);
+        
+        $articleCategoryModel->deleteRelationToCategory($id);
 
         $this->removeTagRelations($id);
 
         $articleModel = new ArticleModel();
         $articleModel->delete($id);
 
-        return $this->getAll();
+        return $this->redirect('/articles');
     }
 
     public function addCategoryToArticleInterface($articleId)
@@ -178,7 +178,7 @@ class ArticleController extends AbstractController
     public function removeCategoryRelation($articleId)
     {
         $articleCategoryModel = new ArticleCategoryModel();
-        $articleCategoryModel->deleteRelation($articleId);
+        $articleCategoryModel->deleteRelationToCategory($articleId);
     }
 
     public function setTagRelations($articleId, $tagIds)

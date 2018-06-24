@@ -5,11 +5,13 @@
         <h2>
             <?php echo $params['article']->getHeadline(); ?>
         </h2>
+        <?php if($params['article']->getCategory()): ?>
         <p>Category:
             <a href=<?php echo '/categories/' . $params[ 'article']->getCategory() ->getId(); ?>>
                 <?php echo $params['article']->getCategory()->getTitle(); ?>
             </a>
         </p>
+        <?php endif; ?>
     </header>
     <p>
         <?php echo $params['article']->getContent(); ?>
@@ -41,7 +43,8 @@
         <label for="categoryId">Select category: </label>
         <select name="categoryId" id="category">
             <?php foreach ($params['categories'] as $category): ?>
-            <option value="<?php echo $category->getId(); ?>" <?php if ($category->getId() == $params['article']->getCategory() ->getId()): echo 'selected';
+            <option value="<?php echo $category->getId(); ?>" 
+                <?php if ($params['article']->getCategory() && $category->getId() == $params['article']->getCategory() ->getId()): echo 'selected';
                 endif; ?> >
                 <?php echo $category->getTitle(); ?>
             </option>
