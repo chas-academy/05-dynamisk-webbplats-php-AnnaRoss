@@ -4,9 +4,9 @@ namespace App\Interfaces;
 
 class ArticleInterface
 {
-    private $id, $headline, $content, $publication_date;
+    private $id, $headline, $content, $publication_date, $user_id;
 
-    protected $category;
+    protected $category, $tags;
 
     public function getId(): int
     {
@@ -27,6 +27,11 @@ class ArticleInterface
     {
         return $this->publication_date;
     }
+    
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
     public function setCategory($category)
     {
@@ -36,5 +41,15 @@ class ArticleInterface
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

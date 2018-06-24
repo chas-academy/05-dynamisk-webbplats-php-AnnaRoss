@@ -29,9 +29,10 @@ class ArticleController extends AbstractController
         $allTags = $tagModel->getAll();
 
         $articleTagModel = new ArticleTagModel();
-        $articleTagIds = $articleTagModel->getRelated($id);
+        $articleTagIds = $articleTagModel->getRelatedTags($id);
 
         $tags = [];
+        $articleTags = [];
 
         foreach ($allTags as $tag) {
 
@@ -45,11 +46,14 @@ class ArticleController extends AbstractController
                 
                 if ($tag->getId() == $articleTagId['tag_id']) {
                     $tagToPush['selected'] = true;
+                    $articleTags[] = $tag;
                 }
             }
             
             $tags[] = $tagToPush;
         }
+        
+        $article->setTags($articleTags);
 
         return $this->render('views/article.html', [
             'article' => $article,
@@ -67,15 +71,28 @@ class ArticleController extends AbstractController
         $categoryModel = new CategoryModel();
         $categories = $categoryModel->getAll();
 
+        $articleCategoryModel = new ArticleCategoryModel();
+        $articleTagModel = new ArticleTagModel();
+        $tagModel = new TagModel();
+
         foreach ($articles as $article) {
-            $articleCategoryModel = new ArticleCategoryModel();
             $articleCategoryId = $articleCategoryModel->getRelatedCategory($article->getId());
             $category = $categoryModel->get($articleCategoryId);
     
             $article->setCategory($category);
+
+            $articleTagIds = $articleTagModel->getRelatedTags($article->getId());
+
+            $articleTags = [];
+            foreach ($articleTagIds as $articleTagId) {
+                $tag = $tagModel->get($articleTagId['tag_id']);
+
+                $articleTags[] = $tag;
+            }
+
+            $article->setTags($articleTags);
         }
 
-        $tagModel = new TagModel();
         $tags = $tagModel->getAll();
 
         return $this->render('views/articles.html', [
@@ -92,9 +109,10 @@ class ArticleController extends AbstractController
         $content = $params->get('content');
         $categoryId = $params->get('categoryId');
         $tagIds = $params->get('tagIds');
+        $userId = $_SESSION['user']->getId();
 
         $articleModel = new ArticleModel();
-        $newArticle = $articleModel->create($headline, $content);
+        $newArticle = $articleModel->create($headline, $content, $userId);
 
         $articleCategoryModel = new ArticleCategoryModel();
         $articleCategoryModel->createRelation($newArticle->getId(), $categoryId);

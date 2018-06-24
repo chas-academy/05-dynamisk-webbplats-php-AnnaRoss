@@ -1,11 +1,13 @@
 <?php include('views/header.html')?>
+
+<?php if(isset($_SESSION['user'])): ?>
 <form method="POST">
     <label for="title">Name of new tag: </label>
     <input type="text" name="title" id="title" minlength="2" maxlength="30" required
     />
-
     <button>save tag</button>
 </form>
+<?php endif; ?>
 
 <?php foreach ($params['tags'] as $tag): ?>
 <ul>
@@ -16,4 +18,5 @@
     </li>
 </ul>
 <?php endforeach; ?>
+
 <?php include('views/footer.html') ?>

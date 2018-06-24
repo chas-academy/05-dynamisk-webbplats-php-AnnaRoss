@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\AbstractController;
 use App\Models\TagModel;
+use App\Models\ArticleModel;
 use App\Models\ArticleTagModel;
 
 class TagController extends AbstractController
@@ -13,8 +14,34 @@ class TagController extends AbstractController
         $tagModel = new TagModel();
         $tag = $tagModel->get($id);
 
+        $articleTagModel  = new ArticleTagModel();
+        $articleIds = $articleTagModel->getRelatedArticles($id);
+
+        $articleModel = new ArticleModel();
+        $articles = [];
+
+        foreach ($articleIds as $articleId) {
+            // Get the complete article instead of just the ID
+            $article = $articleModel->get($articleId['article_id']);
+
+            // Get the all of the articles tagIds
+            $articleTags = $articleTagModel->getRelatedTags($article->getId());
+
+            // Loop over the tagIds in order to get the complete tag mapped to the CategoryTagInterface
+            $tags = [];
+            foreach ($articleTags as $articleTag) {
+                $tags[] = $tagModel->get($articleTag['tag_id']);
+            }
+
+            // Add the tags to the article-object in order to make it easier to use in the view
+            $article->setTags($tags);
+
+            $articles[] = $article;
+        }
+        
         return $this->render('views/tag.html', [
-            'tag' => $tag
+            'tag' => $tag,
+            'articles' => $articles,
         ]);
     }
 

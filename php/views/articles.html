@@ -1,4 +1,6 @@
 <?php include('views/header.html')?>
+
+<?php if(isset($_SESSION[user])): ?>
 <form method="POST" action="/categories">
     <label for="title">Name of new category: </label>
     <input type="text" name="title" id="title" minlength="2" maxlength="30" required
@@ -39,14 +41,13 @@
             </option>
             <?php endforeach; ?>
         </select>
-
     </fieldset>
     <button>save article</button>
 </form>
+<?php endif; ?>
 
 <?php foreach ($params['articles'] as $article): ?>
 <article>
-
     <a href=<?php echo '/articles/' . $article->getId();?> >
         <h2>
             <?php echo $article->getHeadline(); ?>
@@ -59,6 +60,15 @@
         <a href=<?php echo '/categories/' . $article->getCategory()->getId(); ?>>
             <?php echo $article->getCategory()->getTitle(); ?>
         </a>
+        <ul>
+            <?php foreach($article->getTags() as $tag): ?>
+            <li>
+                <a href=<?php echo "/tags/" . $tag->getId(); ?>>
+                    <?php echo $tag->getTitle(); ?>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
         <time>
             <?php echo $article->getPublicationDate(); ?>
         </time>
