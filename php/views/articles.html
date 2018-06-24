@@ -1,6 +1,6 @@
 <?php include('views/header.html')?>
 
-<?php if(isset($_SESSION[user])): ?>
+<?php if(isset($_SESSION['user'])): ?>
 <form method="POST" action="/categories">
     <label for="title">New category: </label>
     <input type="text" name="title" id="title" minlength="2" maxlength="30" required
